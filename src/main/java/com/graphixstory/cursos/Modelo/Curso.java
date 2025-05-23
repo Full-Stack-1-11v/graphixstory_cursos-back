@@ -16,16 +16,16 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idcurso;
 
-    @Column
+    @Column (nullable = false)
     private String nombre;
     
-    @Column
+    @Column (nullable = false)
     private String sigla;
     
-    @Column
+    @Column (nullable = false)
     private int cantidadAlumnos;
     
-    @Column
+    @Column (nullable = false)
     private String horario;
 
 }
