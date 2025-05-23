@@ -24,8 +24,8 @@ public class ServicioCursos {
         return repositorio.findById(id).get();
     }
 
-    public Curso guardarCurso(Curso paciente) {
-        return repositorio.save(paciente);
+    public Curso guardarCurso(Curso curso) {
+        return repositorio.save(curso);
     }
 
     public void borrarCurso(Long id) {
