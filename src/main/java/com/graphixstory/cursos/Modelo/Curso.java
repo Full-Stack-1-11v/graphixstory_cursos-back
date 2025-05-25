@@ -28,4 +28,15 @@ public class Curso {
     @Column (nullable = false)
     private String horario;
 
+    @Column (nullable = false)
+    private String profe_id;
+
+    @Column (nullable = false)
+    private String profe_nombre;
+
+    @Column (nullable = false)
+    private String profe_apellido;
+
+    @Column (nullable = false)
+    private String profe_correo;
 }
