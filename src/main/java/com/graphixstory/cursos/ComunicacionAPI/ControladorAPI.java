@@ -15,7 +15,7 @@ public class ControladorAPI {
             this.restTemplate = restTemplate;
         }
 
-        public ModeloAPI getIdProfe(Long id) {
+        public ModeloAPI getIdProfe(long id) {
             return restTemplate.getForObject(url + "/usuarios/" + id, ModeloAPI.class);
         }
 }
