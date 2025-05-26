@@ -29,7 +29,7 @@ public class Curso {
     private String horario;
 
     @Column (nullable = false)
-    private String profe_id;
+    private Integer profe_id;
 
     @Column (nullable = false)
     private String profe_nombre;

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.graphixstory.cursos.Repositorio.RepositorioCursos;
 import com.graphixstory.cursos.Modelo.Curso;
+import com.graphixstory.cursos.ComunicacionAPI.ModeloRequest;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -24,8 +25,17 @@ public class ServicioCursos {
         return repositorio.findById(id).get();
     }
 
-    public Curso guardarCurso(Curso curso) {
-        return repositorio.save(curso);
+    public Curso guardarCurso(ModeloRequest modeloapi) {
+        Curso cursoguardado = new Curso();
+        cursoguardado.setNombre(modeloapi.getNombre());
+        cursoguardado.setSigla(modeloapi.getSigla());
+        cursoguardado.setCantidadAlumnos(modeloapi.getCantidadAlumnos());
+        cursoguardado.setHorario(modeloapi.getHorario());
+        cursoguardado.setProfe_id(modeloapi.getProfe_id());
+        cursoguardado.setProfe_nombre(modeloapi.getProfe_nombre());
+        cursoguardado.setProfe_apellido(modeloapi.getProfe_apellido());
+        cursoguardado.setProfe_correo(modeloapi.getProfe_correo());
+        return repositorio.save(cursoguardado);
     }
 
     public void borrarCurso(Long id) {

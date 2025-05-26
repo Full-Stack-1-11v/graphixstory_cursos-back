@@ -7,13 +7,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.graphixstory.cursos.Servicio.ServicioCursos;
-
+import com.graphixstory.cursos.ComunicacionAPI.ModeloRequest;
 import com.graphixstory.cursos.Modelo.Curso;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class ControladorCursos {
     }
     
     @PostMapping
-    public ResponseEntity<Curso> guardar(@RequestBody Curso curso) {
+    public ResponseEntity<Curso> guardar(@RequestBody ModeloRequest curso) {
         Curso cursonuevo = servicio.guardarCurso(curso);
         return ResponseEntity.status(HttpStatus.CREATED).body(cursonuevo);
     }
@@ -42,23 +41,6 @@ public class ControladorCursos {
     public ResponseEntity<Curso> buscar(@PathVariable Long id) {
         try {
             Curso curso = servicio.buscarPorId(id);
-            return ResponseEntity.ok(curso);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Curso> actualizar(@PathVariable Integer id, @RequestBody Curso curso) {
-        try {
-            Curso cur = servicio.buscarPorId(id);
-            cur.setIdcurso(id);
-            cur.setNombre(cur.getNombre());
-            cur.setSigla(cur.getSigla());
-            cur.setCantidadAlumnos(cur.getCantidadAlumnos());
-            cur.setHorario(cur.getHorario());
-            
-            servicio.guardarCurso(cur);
             return ResponseEntity.ok(curso);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

@@ -1,5 +1,7 @@
 package com.graphixstory.cursos.ComunicacionAPI;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ModeloAPI {
     private Integer id;
     private String nombre;
