@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 public class ControladorAPI {
     private RestTemplate restTemplate;
 
-        @Value("${url.usuarios}")
+        @Value("https://graphixstory-usuario-back.onrender.com/api")
         private String url;
 
         public ControladorAPI(RestTemplate restTemplate) {

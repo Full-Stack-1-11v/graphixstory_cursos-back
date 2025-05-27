@@ -32,7 +32,7 @@ public class ServicioCursos {
 
     public Curso guardarCurso(ModeloRequest modeloapi) {
         // Llamada a la API externa para obtener los datos del profesor
-        String url = "https://graphixstory-usuario-back.onrender.com/api/usuarios" + modeloapi.getProfe_id();
+        String url = "https://graphixstory-usuario-back.onrender.com/api/usuarios/" + modeloapi.getProfe_id();
         ModeloAPI profesor = restTemplate.getForObject(url, ModeloAPI.class);
 
         if (profesor == null) {
