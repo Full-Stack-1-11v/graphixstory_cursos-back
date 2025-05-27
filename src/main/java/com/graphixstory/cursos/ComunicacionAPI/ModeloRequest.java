@@ -15,7 +15,4 @@ public class ModeloRequest {
     private String horario;
     
     private Integer profe_id;
-    private String profe_nombre;
-    private String profe_apellido;
-    private String profe_correo;
 }
