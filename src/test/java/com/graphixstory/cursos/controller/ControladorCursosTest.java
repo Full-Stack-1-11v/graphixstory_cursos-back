@@ -56,4 +56,14 @@ public class ControladorCursosTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1L));
     }
+
+    @Test
+    void GetCurso() throws Exception {
+
+        Mockito.when(servicioCursos.buscarPorId(1L)).thenReturn(new Curso());
+
+        mockMvc.perform(post("/cursos/1") // Ejecuta la prueba
+                        .contentType(MediaType.APPLICATION_JSON)) // El tipo de contenido que retorna
+                .andExpect(status().isOk()); // Si retorna un 200
+    }
 }

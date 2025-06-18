@@ -63,6 +63,13 @@ public class ControladorCursos {
 
     @Operation(summary = "Mostrar curso por ID", description = "Muestra un curso según la ID especificada en el link")
     @GetMapping("/{id}")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "El curso se mostró de manera correcta.",
+            content = @Content(mediaType = "application/json",
+            schema = @Schema(implementation = Curso.class))),
+        @ApiResponse(responseCode = "404", description = "No hay un curso correspondiente con la ID."),
+        @ApiResponse(responseCode = "500", description = "El servicio no está disponible.")
+    })
     public ResponseEntity<Curso> buscar(@PathVariable Long id) {
         try {
             Curso curso = servicio.buscarPorId(id);
@@ -72,8 +79,13 @@ public class ControladorCursos {
         }
     }
 
-    @Operation(summary = "Borrar curso", description = "Borra el curso indicado por su ID")
+    @Operation(summary = "Borrar curso", description = "Borra un curso según la ID especificada en el link")
     @DeleteMapping("/{id}")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "El curso se ha borrado de forma correcta"),
+        @ApiResponse(responseCode = "403", description = "No se tienen los permisos para borrar el curso."),
+        @ApiResponse(responseCode = "500", description = "El servicio no está disponible.")
+    })
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         try {
             servicio.borrarCurso(id);
