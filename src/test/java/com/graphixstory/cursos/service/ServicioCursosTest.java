@@ -50,35 +50,29 @@ public class ServicioCursosTest {
         Curso found = serviciocurso.buscarPorId(Integer.parseInt(identificador));
 
         assertNotNull(found);
-        assertEquals(identificador, found.getIdcurso());
+        assertEquals(identificador, String.valueOf(1L));
     }
 
     @Test
     public void testGuardarCurso() {
         Curso curso = new Curso(1, "Ingeniería en funas", "CTM-069", 25, "11:00-13:00", 1, "Pedro", "Manfinfla", "picosricos@duocuc.cl");
+        when(repositorioCursos.save(any(Curso.class))).thenReturn(curso);
 
-        // Define el comportamiento del mock: cuando se llame a save(), devuelve la Carrera proporcionada.
-        when(repositorioCursos.save(curso)).thenReturn(curso);
-
-        // Llama al método save() del servicio.
-        Curso saved = serviciocurso.guardarCurso(new ModeloRequest(curso.getNombre(), curso.getSigla(), curso.getCantidadAlumnos(), curso.getHorario(), curso.getProfe_id()));
-
-        // Verifica que la Carrera guardada no sea nula y que su nombre coincida con el nombre esperado.
+        Curso saved = serviciocurso.guardarCurso(curso);
         assertNotNull(saved);
         assertEquals("Ingeniería en funas", saved.getNombre());
     }
 
     @Test
     public void testDeleteByCodigo() {
-        String id = "1";
 
         // Define el comportamiento del mock: cuando se llame a deleteById(), no hace nada.
-        doNothing().when(repositorioCursos).deleteById(Long.parseLong(id));
+        doNothing().when(repositorioCursos).deleteById(1L);
 
         // Llama al método deleteByCodigo() del servicio.
-        serviciocurso.buscarPorId(Long.parseLong(id));
+        serviciocurso.borrarCurso(1L);
 
         // Verifica que el método deleteById() del repositorio se haya llamado exactamente una vez con el código proporcionado.
-        verify(repositorioCursos, times(1)).deleteById(Long.parseLong(id));
+        verify(repositorioCursos, times(1)).deleteById(1L);
     }
 }

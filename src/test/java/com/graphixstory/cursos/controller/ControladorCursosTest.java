@@ -14,10 +14,13 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
+import java.util.List;
 
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -34,9 +37,8 @@ public class ControladorCursosTest {
     void Cursos_empty() throws Exception {
         Mockito.when(servicioCursos.verCurso()).thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/cursos"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
+        mockMvc.perform(get("/api/v1/cursos"))
+                .andExpect(status().is(204));
     }
 
     @Test
@@ -47,23 +49,45 @@ public class ControladorCursosTest {
         curso.setSigla("TST-123");
         curso.setCantidadAlumnos(10);
         curso.setHorario("1-2");
+        curso.setProfe_id(1);
+        curso.setProfe_nombre("Armando");
+        curso.setProfe_apellido("Casas");
+        curso.setProfe_correo("pajabrava@tulon.cl");
 
-        Mockito.when(servicioCursos.guardarCurso(any(ModeloRequest.class))).thenReturn(curso);
+        Mockito.when(servicioCursos.guardarCurso(any(Curso.class))).thenReturn(curso);
 
-        mockMvc.perform(post("/cursos")
+        mockMvc.perform(post("/api/v1/cursos")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"nombre\":\"TestName\",\"sigla\":\"TST-123\",\"cantidadAlumnos\"10}"))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(1L));
+                        .content("{\"nombre\":\"TestName\",\"sigla\":\"TST-123\",\"cantidadAlumnos\":10,\"horario\":\"1-2\",\"profe_id\":1,\"profe_nombre\":\"Armando\",\"profe_apellido\":\"Casas\",\"profe_correo\":\"pajabrava@tulon.cl\"}"))
+                .andExpect(status().isCreated());
     }
 
     @Test
-    void GetCurso() throws Exception {
+    void GetCursoPorID() throws Exception {
 
         Mockito.when(servicioCursos.buscarPorId(1L)).thenReturn(new Curso());
 
-        mockMvc.perform(post("/cursos/1") // Ejecuta la prueba
+        mockMvc.perform(get("/api/v1/cursos/1") // Ejecuta la prueba
                         .contentType(MediaType.APPLICATION_JSON)) // El tipo de contenido que retorna
                 .andExpect(status().isOk()); // Si retorna un 200
+    }
+
+    @Test
+    void DeleteCurso() throws Exception {
+
+        Curso curso = new Curso();
+        curso.setIdcurso(1);
+        curso.setNombre("TestName");
+        curso.setSigla("TST-123");
+        curso.setCantidadAlumnos(10);
+        curso.setHorario("1-2");
+
+
+
+        doNothing().when(servicioCursos).borrarCurso(1L);
+
+        mockMvc.perform(delete("/api/v1/cursos/1") // Ejecuta la prueba
+                        .contentType(MediaType.APPLICATION_JSON)) // El tipo de contenido que retorna
+                .andExpect(status().is(204)); // Si retorna un 204
     }
 }

@@ -30,7 +30,7 @@ public class ServicioCursos {
         return repositorio.findById(id).orElse(null);
     }
 
-    public Curso guardarCurso(ModeloRequest modeloapi) {
+    public Curso guardarCurso(Curso modeloapi) {
         // Llamada a la API externa para obtener los datos del profesor
         String url = "https://graphixstory-usuario-back.onrender.com/api/usuarios/" + modeloapi.getProfe_id();
         ModeloAPI profesor = restTemplate.getForObject(url, ModeloAPI.class);
@@ -52,7 +52,9 @@ public class ServicioCursos {
         cursoguardado.setProfe_apellido(profesor.getApellido());
         cursoguardado.setProfe_correo(profesor.getCorreo());
 
-        return repositorio.save(cursoguardado);
+        Curso test = repositorio.save(cursoguardado);
+
+        return test;
     }
 
     public void borrarCurso(Long id) {

@@ -56,7 +56,7 @@ public class ControladorCursos {
         @ApiResponse(responseCode = "403", description = "No se tienen los permisos para subir el curso."),
         @ApiResponse(responseCode = "500", description = "El servicio no está disponible.")
     })
-    public ResponseEntity<Curso> guardar(@RequestBody ModeloRequest curso) {
+    public ResponseEntity<Curso> guardar(@RequestBody Curso curso) {
         Curso cursonuevo = servicio.guardarCurso(curso);
         return ResponseEntity.status(HttpStatus.CREATED).body(cursonuevo);
     }
