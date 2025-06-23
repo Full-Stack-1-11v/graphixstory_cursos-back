@@ -59,7 +59,7 @@ public class ControladorCursosV2 {
     /**
      * Guarda un curso nuevo en el sistema.
      * 
-     * @param paciente Objeto {@link Curso} con la información del curso a
+     * @param curso Objeto {@link Curso} con la información del curso a
      *                 guardar.
      * @return Objeto {@link Curso} guardado.
      */
