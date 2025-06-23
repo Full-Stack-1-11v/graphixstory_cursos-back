@@ -2,16 +2,17 @@ package com.graphixstory.cursos.Servicio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.graphixstory.cursos.Repositorio.RepositorioCursos;
 import com.graphixstory.cursos.Modelo.Curso;
-import com.graphixstory.cursos.ComunicacionAPI.ModeloAPI;
-import com.graphixstory.cursos.ComunicacionAPI.ModeloRequest;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
 
+/**
+ * Servicio para gestionar las operaciones relacionadas con los cursos.
+ * Proporciona métodos para listar, obtener, crear y eliminar cursos.
+ */
 @Service
 @Transactional
 public class ServicioCursos {
@@ -19,44 +20,54 @@ public class ServicioCursos {
     @Autowired
     private RepositorioCursos repositorio;
 
-    @Autowired
-    private RestTemplate restTemplate;
-
+    /**
+     * Obtiene una lista de todos los cursos en la plataforma.
+     * 
+     * @return Lista de objetos {@link Curso}.
+     */
     public List<Curso> verCurso() {
         return repositorio.findAll();
     }
 
+    /**
+     * Obtiene un curso por su ID.
+     * 
+     * @param id ID del curso a buscar.
+     * @return Objeto {@link Curso} correspondiente al ID proporcionado o
+     *         {@code null} si no se encuentra.
+     */
     public Curso buscarPorId(long id) {
         return repositorio.findById(id).orElse(null);
     }
 
-    public Curso guardarCurso(Curso modeloapi) {
-        // Llamada a la API externa para obtener los datos del profesor
-        String url = "https://graphixstory-usuario-back.onrender.com/api/usuarios/" + modeloapi.getProfe_id();
-        ModeloAPI profesor = restTemplate.getForObject(url, ModeloAPI.class);
-
-        if (profesor == null) {
-            throw new RuntimeException("No se encontró el profesor con ID: " + modeloapi.getProfe_id());
-        }
-
-        // Crear y guardar el curso
+    /**
+     * Guarda un nuevo curso en el sistema.
+     * 
+     * @param curso Objeto {@link Curso} con la información del curso a
+     *                 guardar.
+     * @return Objeto {@link Curso} guardado o existente.
+     */
+    public Curso guardarCurso(Curso modelo) {
         Curso cursoguardado = new Curso();
-        cursoguardado.setNombre(modeloapi.getNombre());
-        cursoguardado.setSigla(modeloapi.getSigla());
-        cursoguardado.setCantidadAlumnos(modeloapi.getCantidadAlumnos());
-        cursoguardado.setHorario(modeloapi.getHorario());
-
-        // Datos del profesor traídos desde la API
-        cursoguardado.setProfe_id(profesor.getId());
-        cursoguardado.setProfe_nombre(profesor.getNombre());
-        cursoguardado.setProfe_apellido(profesor.getApellido());
-        cursoguardado.setProfe_correo(profesor.getCorreo());
+        cursoguardado.setNombre(modelo.getNombre());
+        cursoguardado.setSigla(modelo.getSigla());
+        cursoguardado.setCantidadAlumnos(modelo.getCantidadAlumnos());
+        cursoguardado.setHorario(modelo.getHorario());
+        cursoguardado.setProfe_id(modelo.getProfe_id());
+        cursoguardado.setProfe_nombre(modelo.getProfe_nombre());
+        cursoguardado.setProfe_apellido(modelo.getProfe_apellido());
+        cursoguardado.setProfe_correo(modelo.getProfe_correo());
 
         Curso test = repositorio.save(cursoguardado);
 
         return test;
     }
 
+    /**
+     * Elimina un curso del sistema por su ID.
+     * 
+     * @param id ID del curso a eliminar.
+     */
     public void borrarCurso(Long id) {
         repositorio.deleteById(id);
     }

@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.graphixstory.cursos.ComunicacionAPI.ModeloRequest;
 import com.graphixstory.cursos.Modelo.Curso;
 import com.graphixstory.cursos.Repositorio.RepositorioCursos;
 import com.graphixstory.cursos.Servicio.ServicioCursos;
